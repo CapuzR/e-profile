@@ -1,0 +1,17 @@
+
+
+//Read Profile
+
+// dfx --identity XYZ canister call weaveProfile readProfile '()'
+
+// Update Profile
+
+// dfx --identity XYZ canister call weaveProfile updateProfile '(record {bio=record {familyName=opt "Capuz"; about=opt "Capuz is just Capuz"; username=opt "capuzr"; displayName=opt "capuzr"; socials=opt record {ceSo=opt record {twitter=opt "capuzr"; instagram=opt "capuzr"; facebook=opt "capuzr"; discord=opt "capuzr#2678"}; deSo=opt record {distrikt=opt "capuzr"; dscvr=opt "capuzr"; openChat=opt "capuzr"}}; givenName=opt "Ricardo"; email=opt "capuzr@gmail.com"; phone=opt "584143201028"; location=opt "Caracas, Venezuela"}})'
+
+// Create Profile
+
+// dfx --identity XYZ canister call weaveProfile createProfile '(record {bio=record {familyName=opt "Capuz"; about=opt "Capuz is just Capuz"; username=opt "capuzr"; displayName=opt "capuzr"; givenName=opt "Ricardo"; email=opt "capuzr@gmail.com"; phone=opt "+58 4143201028"; location=opt "Caracas, Venezuela"}})'
+
+//Delete Profile
+
+// dfx --identity XYZ canister call weaveProfile deleteProfile '()'

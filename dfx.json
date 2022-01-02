@@ -3,19 +3,6 @@
     "weaveProfile": {
       "main": "src/weaveProfile/main.mo",
       "type": "motoko"
-    },
-    "weaveProfile_assets": {
-      "dependencies": [
-        "weaveProfile"
-      ],
-      "frontend": {
-        "entrypoint": "src/weaveProfile_assets/src/index.html"
-      },
-      "source": [
-        "src/weaveProfile_assets/assets",
-        "dist/weaveProfile_assets/"
-      ],
-      "type": "assets"
     }
   },
   "defaults": {
