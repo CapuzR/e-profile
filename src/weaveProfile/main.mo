@@ -212,8 +212,4 @@ actor {
         //     return #err(#Other("Not authorized"));
         // };await toniqNftCanister.tokens(AID.fromPrincipal(callerId, null));
     };
-
-    // public shared(msg) func getHolderByDiscord ( canisterPpal : Principal, discord : Text ) : async Bool  {
-
-    // };
 };

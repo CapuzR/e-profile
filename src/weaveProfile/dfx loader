@@ -1,4 +1,7 @@
+//To create multiple identities and test properly:
 
+// dfx identity new gega
+// dfx identity new capuzr
 
 //Read Profile
 
