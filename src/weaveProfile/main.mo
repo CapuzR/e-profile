@@ -25,7 +25,7 @@ actor {
     type Bio = Types.Bio;
     type Profile = Types.Profile;
     type Error = Types.Error;
-    type ProfileUpgrade = Types.ProfileUpgrade;
+    // type ProfileUpgrade = Types.ProfileUpgrade;
 
     type Holders = Types.Holders;
 
@@ -85,6 +85,7 @@ actor {
         //     let temp = Trie.put(profiles, key(x), Principal.equal, y).0;
         //     profiles:= temp;
         // };
+        // profileUpgrade := [];
     };
 
     public query ({caller}) func listAssets() : async [(Text, Text, Nat)] {
@@ -149,7 +150,7 @@ actor {
         };
     };
 
-    public query(msg) func readProfile () : async Result.Result<(?Profile, Static.Asset), Error> {
+    public query(msg) func readProfile () : async Result.Result<(?Profile, ?Static.Asset), Error> {
         // Get caller principal
         let callerId = msg.caller;
         let textCallerId : Text = Principal.toText(callerId);
@@ -165,14 +166,21 @@ actor {
             Principal.equal     // Equality Checker
         );
         
-        switch(staticAssets.getToken(textCallerId)) {
-            case (#err(_)) { return #err(#NotFound); };
-            case (#ok(v))  {
-                return #ok((result, { contentType = v.contentType; payload = v.payload }));
+        switch (result){
+            case null {
+                #err(#NotFound)
+            };
+            case (? v) {
+                switch(staticAssets.getToken(textCallerId)) {
+                    case (#err(_)) { 
+                        #ok((result, null));
+                    };
+                    case (#ok(v))  {
+                        #ok((result, ?{ contentType = v.contentType; payload = v.payload }));
+                    };
+                };
             };
         };
-
-        // return Result.fromOption((result, asset), #NotFound);
     };
 
     public shared(msg) func updateProfile (profile : ProfileUpdate) : async Result.Result<(), Error> {

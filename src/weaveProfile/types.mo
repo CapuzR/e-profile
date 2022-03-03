@@ -71,21 +71,21 @@ module {
 
 //Upgrade types
 
-    public type ProfileUpgrade = {
-        bio: BioUpgrade;
-        id: Principal;
-    };
+    // public type ProfileUpgrade = {
+    //     bio: BioUpgrade;
+    //     id: Principal;
+    // };
 
-    public type BioUpgrade = {
-        givenName: ?Text;
-        familyName: ?Text;
-        username: ?Text;
-        displayName: ?Text;
-        location: ?Text;
-        about: ?Text;
-        email: ?Text;
-        phone: ?Text;
-        socials: ?Socials;
-        test: Text;
-    };
+    // public type BioUpgrade = {
+    //     givenName: ?Text;
+    //     familyName: ?Text;
+    //     username: ?Text;
+    //     displayName: ?Text;
+    //     location: ?Text;
+    //     about: ?Text;
+    //     email: ?Text;
+    //     phone: ?Text;
+    //     socials: ?Socials;
+    //     test: Text;
+    // };
 };
