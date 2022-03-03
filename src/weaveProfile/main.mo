@@ -88,10 +88,6 @@ actor {
         // profileUpgrade := [];
     };
 
-    public query ({caller}) func listAssets() : async [(Text, Text, Nat)] {
-        staticAssets.list();
-    };
-
     public shared(msg) func createProfile (profile: ProfileUpdate) : async Result.Result<(), Error> {
         // Get caller principal
         let callerId = msg.caller;
