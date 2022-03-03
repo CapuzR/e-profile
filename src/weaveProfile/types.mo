@@ -1,3 +1,5 @@
+import Static "./uploader/static";
+
 module {
 //Profile
 
@@ -30,6 +32,7 @@ module {
         email: ?Text;
         phone: ?Text;
         socials: ?Socials;
+        // test: Text;
     };
 
     public type Profile = {
@@ -39,12 +42,18 @@ module {
     
     public type ProfileUpdate = {
         bio: Bio;
+        avatarRequest: Static.AssetRequest;
     };
 
     public type Error = {
-        #NotFound;
         #AlreadyExists;
         #NotAuthorized;
+        #Unauthorized;
+        #NotFound;
+        #InvalidRequest;
+        #AuthorizedPrincipalLimitReached : Nat;
+        #Immutable;
+        #FailedToWrite : Text;
     };
 
     public type Holders = {
@@ -58,4 +67,25 @@ module {
     public type CommonError = { #InvalidToken : TokenIdentifier; #Other : Text };
     public type TokenIdentifier = Text;
     public type AccountIdentifier__1 = Text;
+
+
+//Upgrade types
+
+    public type ProfileUpgrade = {
+        bio: BioUpgrade;
+        id: Principal;
+    };
+
+    public type BioUpgrade = {
+        givenName: ?Text;
+        familyName: ?Text;
+        username: ?Text;
+        displayName: ?Text;
+        location: ?Text;
+        about: ?Text;
+        email: ?Text;
+        phone: ?Text;
+        socials: ?Socials;
+        test: Text;
+    };
 };
