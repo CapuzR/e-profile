@@ -6,15 +6,15 @@
 
 Read Profile
 
- dfx --identity XYZ canister call weaveProfile readProfile '()'
+ dfx --identity tom canister call weaveProfile readProfile '()'
 
 Update Profile
 
- dfx --identity XYZ canister call weaveProfile updateProfile '(record {bio=record {familyName=opt "Capuz"; about=opt "Capuz is just Capuz"; username=opt "capuzr"; displayName=opt "capuzr"; socials=opt record {ceSo=opt record {twitter=opt "capuzr"; instagram=opt "capuzr"; facebook=opt "capuzr"; discord=opt "capuzr#2678"}; deSo=opt record {distrikt=opt "capuzr"; dscvr=opt "capuzr"; openChat=opt "capuzr"}}; givenName=opt "Ricardo"; email=opt "capuzr@gmail.com"; phone=opt "584143201028"; location=opt "Caracas, Venezuela"}})'
+ dfx --identity tom canister call weaveProfile updateProfile '(record {bio=record {familyName=opt "Capuz"; about=opt "Capuz is just Capuz"; username=opt "capuzr"; displayName=opt "capuzr"; socials=opt record {ceSo=opt record {twitter=opt "capuzr"; instagram=opt "capuzr"; facebook=opt "capuzr"; discord=opt "capuzr#2678"}; deSo=opt record {distrikt=opt "capuzr"; dscvr=opt "capuzr"; openChat=opt "capuzr"}}; givenName=opt "Ricardo"; email=opt "capuzr@gmail.com"; phone=opt "584143201028"; location=opt "Caracas, Venezuela"}})'
 
 Create Profile
 
- dfx --identity XYZ canister call weaveProfile createProfile '(record {bio=record {familyName=opt "Capuz"; about=opt "Capuz is just Capuz"; username=opt "capuzr"; displayName=opt "capuzr"; givenName=opt "Ricardo"; email=opt "capuzr@gmail.com"; phone=opt "+58 4143201028"; location=opt "Caracas, Venezuela"}})'
+ dfx --identity tom canister call weaveProfile createProfile '(record {bio=record {familyName=opt "srxpre4"; about=opt "w0k0qdq"; username=opt "xmmvd9e"; displayName=opt "etf6366"; socials=opt record {ceSo=opt record {tiktok=null; twitter=null; instagram=null; facebook=null; discord=null}; deSo=opt record {distrikt=null; dscvr=null; openChat=null}}; givenName=opt "7t5p5nu"; email=opt "v4jofoc"; phone=opt "vsjzv2r"; location=opt "1wp397w"}; avatarRequest=variant {Put=record {key="ebsni-n36ba-7n64h-m7edm-uwb2h-a4hs6-fsw5k-73azx-o3dp4-5uidd-pqe"; contentType="jm784n"; callback=null; payload=variant {Payload=vec {77}}}}})'
 
 Delete Profile
 

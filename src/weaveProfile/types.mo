@@ -3,6 +3,10 @@ import Static "./uploader/static";
 module {
 //Profile
 
+    public type InitOptions = {
+        admins : [Principal];
+    };
+
     public type CeSo = {
         discord: ?Text;
         twitter: ?Text;
