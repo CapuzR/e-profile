@@ -12,6 +12,7 @@ import Uploader "./uploader/main";
 import Static "./uploader/static";
 import Iter "mo:base/Iter";
 import Text "mo:base/Text";
+import U "./utils";
 
 
 import Debug "mo:base/Debug";
@@ -19,8 +20,9 @@ import Debug "mo:base/Debug";
 import AID "./util/AccountIdentifier";
 
 
-actor {
-
+shared({ caller = owner }) actor class (
+  initOptions : Types.InitOptions
+) = weaveProfile {
     type ProfileUpdate = Types.ProfileUpdate;
     type Bio = Types.Bio;
     type Profile = Types.Profile;
@@ -37,6 +39,8 @@ actor {
     // stable var profileUpgrade : [(Principal, ProfileUpgrade)] = [];
 
     stable var profiles : Trie.Trie<Principal, Profile> = Trie.empty();
+
+    stable var admins : [Principal] = initOptions.admins;
 
 
     stable var staticAssetsEntries : [(
@@ -87,6 +91,27 @@ actor {
         // };
         // profileUpgrade := [];
     };
+
+      public shared ({caller}) func addNewAdmin (principals : [Principal]) : async Result.Result<(), Types.Error> {
+      
+      if(not U.isAdmin(caller, admins)) {
+          return #err(#NotAuthorized);
+      };
+
+      let adminsBuff : Buffer.Buffer<Principal> = Buffer.Buffer(0);
+      
+      for (admin in admins.vals()) {
+        adminsBuff.add(admin);
+      };
+
+      for (principal in principals.vals()) {
+        adminsBuff.add(principal);
+      };
+      
+      admins := adminsBuff.toArray();
+      return #ok(());
+
+  };
 
     public shared(msg) func createProfile (profile: ProfileUpdate) : async Result.Result<(), Error> {
         // Get caller principal
@@ -349,4 +374,23 @@ actor {
         //     return #err(#Other("Not authorized"));
         // };await toniqNftCanister.tokens(AID.fromPrincipal(callerId, null));
     };
+
+    public shared({caller}) func getAllProfiles(): async Result.Result<[(Principal, Profile)], Types.Error> 
+    {
+    if(not U.isAdmin(caller, admins)) {
+        return #err(#NotAuthorized);
+    }else {
+    var resultProfiles = Iter.toArray(Trie.iter(profiles));
+    return #ok(resultProfiles);
+    };
+    };
+
+    public shared({caller}) func getAdmins(): async Result.Result<[Principal], Types.Error>{
+            if(not U.isAdmin(caller, admins)) {
+                return #err(#NotAuthorized);
+            }else {
+                return #ok(admins);
+            };
+    };
+
 };
