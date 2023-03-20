@@ -1,6 +1,7 @@
 {
-  "weaveProfile": {
+  "e_profile": {
     "local": "rrkah-fqaaa-aaaaa-aaaaq-cai",
-    "ic": "wrcb3-5qaaa-aaaal-qaahq-cai"
+    "ic": "wrcb3-5qaaa-aaaal-qaahq-cai",
+    "staging": ""
   }
 }

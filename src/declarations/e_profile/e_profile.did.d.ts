@@ -1,14 +1,17 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
-export interface Asset { 'contentType' : string, 'payload' : Array<Uint8Array> }
+export interface Asset {
+  'contentType' : string,
+  'payload' : Array<Uint8Array | number[]>,
+}
 export type AssetRequest = {
     'Put' : {
       'key' : string,
       'contentType' : string,
       'callback' : [] | [Callback],
       'payload' : { 'StagedData' : null } |
-        { 'Payload' : Uint8Array },
+        { 'Payload' : Uint8Array | number[] },
     }
   } |
   { 'Remove' : { 'key' : string, 'callback' : [] | [Callback] } } |
@@ -66,7 +69,9 @@ export type Result_2 = { 'ok' : Array<string> } |
   { 'err' : CommonError };
 export type Result_3 = { 'ok' : Array<[Principal, Profile]> } |
   { 'err' : Error__1 };
-export type Result_4 = { 'ok' : null } |
+export type Result_4 = { 'ok' : Array<Principal> } |
+  { 'err' : Error__1 };
+export type Result_5 = { 'ok' : null } |
   { 'err' : Error__1 };
 export interface Socials { 'ceSo' : [] | [CeSo], 'deSo' : [] | [DeSo] }
 export type TokenIdentifier = string;
@@ -76,14 +81,15 @@ export type WriteAsset = {
   {
     'Chunk' : {
       'id' : string,
-      'chunk' : Uint8Array,
+      'chunk' : Uint8Array | number[],
       'callback' : [] | [Callback],
     }
   };
 export interface anon_class_23_1 {
-  'addNewAdmin' : ActorMethod<[Array<Principal>], Result_4>,
+  'addNewAdmin' : ActorMethod<[Array<Principal>], Result_5>,
   'createProfile' : ActorMethod<[ProfileUpdate], Result>,
   'deleteProfile' : ActorMethod<[AssetRequest], Result>,
+  'getAdmins' : ActorMethod<[], Result_4>,
   'getAllProfiles' : ActorMethod<[], Result_3>,
   'getDiscordHolders' : ActorMethod<[string], Result_2>,
   'readProfile' : ActorMethod<[], Result_1>,

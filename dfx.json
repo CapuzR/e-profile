@@ -1,7 +1,7 @@
 {
   "canisters": {
-    "weaveProfile": {
-      "main": "src/weaveProfile/main.mo",
+    "e_profile": {
+      "main": "src/main.mo",
       "type": "motoko"
     }
   },

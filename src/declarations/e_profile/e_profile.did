@@ -1,8 +1,9 @@
 type anon_class_23_1 = 
  service {
-   addNewAdmin: (vec principal) -> (Result_4);
+   addNewAdmin: (vec principal) -> (Result_5);
    createProfile: (ProfileUpdate) -> (Result);
    deleteProfile: (AssetRequest) -> (Result);
+   getAdmins: () -> (Result_4);
    getAllProfiles: () -> (Result_3);
    getDiscordHolders: (text) -> (Result_2);
    readProfile: () -> (Result_1) query;
@@ -27,10 +28,15 @@ type Socials =
    ceSo: opt CeSo;
    deSo: opt DeSo;
  };
-type Result_4 = 
+type Result_5 = 
  variant {
    err: Error__1;
    ok;
+ };
+type Result_4 = 
+ variant {
+   err: Error__1;
+   ok: vec principal;
  };
 type Result_3 = 
  variant {

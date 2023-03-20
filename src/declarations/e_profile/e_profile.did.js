@@ -10,7 +10,7 @@ export const idlFactory = ({ IDL }) => {
     'AuthorizedPrincipalLimitReached' : IDL.Nat,
     'FailedToWrite' : IDL.Text,
   });
-  const Result_4 = IDL.Variant({ 'ok' : IDL.Null, 'err' : Error__1 });
+  const Result_5 = IDL.Variant({ 'ok' : IDL.Null, 'err' : Error__1 });
   const CeSo = IDL.Record({
     'tiktok' : IDL.Opt(IDL.Text),
     'twitter' : IDL.Opt(IDL.Text),
@@ -79,6 +79,10 @@ export const idlFactory = ({ IDL }) => {
     'FailedToWrite' : IDL.Text,
   });
   const Result = IDL.Variant({ 'ok' : IDL.Null, 'err' : Error });
+  const Result_4 = IDL.Variant({
+    'ok' : IDL.Vec(IDL.Principal),
+    'err' : Error__1,
+  });
   const Profile = IDL.Record({ 'id' : IDL.Principal, 'bio' : Bio });
   const Result_3 = IDL.Variant({
     'ok' : IDL.Vec(IDL.Tuple(IDL.Principal, Profile)),
@@ -102,9 +106,10 @@ export const idlFactory = ({ IDL }) => {
     'err' : Error,
   });
   const anon_class_23_1 = IDL.Service({
-    'addNewAdmin' : IDL.Func([IDL.Vec(IDL.Principal)], [Result_4], []),
+    'addNewAdmin' : IDL.Func([IDL.Vec(IDL.Principal)], [Result_5], []),
     'createProfile' : IDL.Func([ProfileUpdate], [Result], []),
     'deleteProfile' : IDL.Func([AssetRequest], [Result], []),
+    'getAdmins' : IDL.Func([], [Result_4], []),
     'getAllProfiles' : IDL.Func([], [Result_3], []),
     'getDiscordHolders' : IDL.Func([IDL.Text], [Result_2], []),
     'readProfile' : IDL.Func([], [Result_1], ['query']),

@@ -1,11 +1,11 @@
 import { Actor, HttpAgent } from "@dfinity/agent";
 
 // Imports and re-exports candid interface
-import { idlFactory } from "./weaveProfile.did.js";
-export { idlFactory } from "./weaveProfile.did.js";
+import { idlFactory } from "./e_profile.did.js";
+export { idlFactory } from "./e_profile.did.js";
 
 // CANISTER_ID is replaced by webpack based on node environment
-export const canisterId = process.env.WEAVEPROFILE_CANISTER_ID;
+export const canisterId = process.env.E_PROFILE_CANISTER_ID;
 
 export const createActor = (canisterId, options = {}) => {
   const agent = options.agent || new HttpAgent({ ...options.agentOptions });
@@ -34,4 +34,4 @@ export const createActor = (canisterId, options = {}) => {
   });
 };
 
-export const weaveProfile = createActor(canisterId);
+export const e_profile = createActor(canisterId);
