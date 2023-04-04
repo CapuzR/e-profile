@@ -13,6 +13,8 @@ import Static "./uploader/static";
 import Iter "mo:base/Iter";
 import Text "mo:base/Text";
 import U "./utils";
+import Blob "mo:base/Blob";
+import Http "./uploader/http";
 
 
 import Debug "mo:base/Debug";
@@ -369,10 +371,6 @@ shared({ caller = owner }) actor class (
         };
 
         return #ok(res);
-        // Reject AnonymousIdentity
-        // if(Principal.toText(callerId) == "2vxsx-fae") {
-        //     return #err(#Other("Not authorized"));
-        // };await toniqNftCanister.tokens(AID.fromPrincipal(callerId, null));
     };
 
     public shared({caller}) func getAllProfiles(): async Result.Result<[(Principal, Profile)], Types.Error> 
@@ -393,4 +391,50 @@ shared({ caller = owner }) actor class (
             };
     };
 
+    // HTTP interface
+
+    public query func http_request(request : Http.Request) : async Http.Response {
+        let path = Iter.toArray(Text.tokens(request.url, #text("/")));
+
+        return staticAssets.get(path[0], staticStreamingCallback);
+    };
+
+    public query func http_request_streaming_callback(
+        tk : Http.StreamingCallbackToken
+    ) : async Http.StreamingCallbackResponse {
+        switch (staticAssets.getToken(tk.key)) {
+            case (#err(_)) { 
+                return {
+                    body  = Blob.fromArray([]); 
+                    token = null;
+                };
+            };
+            case (#ok(v))  {
+                return Http.streamContent(
+                    tk.key, 
+                    tk.index, 
+                    v.payload,
+                );
+            };
+        };
+    };
+
+    // A streaming callback based on static assets.
+    // Returns {[], null} if the asset can not be found.
+    public query func staticStreamingCallback(tk : Http.StreamingCallbackToken) : async Http.StreamingCallbackResponse {
+        switch(staticAssets.getToken(tk.key)) {
+            case (#err(_)) { };
+            case (#ok(v))  {
+                return Http.streamContent(
+                    tk.key,
+                    tk.index,
+                    v.payload,
+                );
+            };
+        };
+        {
+            body = Blob.fromArray([]);
+            token = null;
+        };
+    };
 };

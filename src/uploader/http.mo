@@ -6,6 +6,13 @@ module Http {
 
     public type HeaderField = (Text, Text);
 
+    public type Request = {
+        body    : Blob;
+        headers : [HeaderField];
+        method  : Text;
+        url     : Text;
+    };
+
     public type Response = {
         body               : Blob;
         headers            : [HeaderField];
