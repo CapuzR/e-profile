@@ -1,4 +1,4 @@
-type anon_class_23_1 = 
+type anon_class_24_1 = 
  service {
    addNewAdmin: (vec principal) -> (Result_5);
    createProfile: (ProfileUpdate) -> (Result);
@@ -6,7 +6,12 @@ type anon_class_23_1 =
    getAdmins: () -> (Result_4);
    getAllProfiles: () -> (Result_3);
    getDiscordHolders: (text) -> (Result_2);
+   http_request: (Request) -> (Response) query;
+   http_request_streaming_callback: (StreamingCallbackToken) ->
+    (StreamingCallbackResponse) query;
    readProfile: () -> (Result_1) query;
+   staticStreamingCallback: (StreamingCallbackToken) ->
+    (StreamingCallbackResponse) query;
    updateProfile: (ProfileUpdate) -> (Result);
  };
 type WriteAsset = 
@@ -23,6 +28,25 @@ type WriteAsset =
          };
  };
 type TokenIdentifier = text;
+type StreamingStrategy = variant {
+                           Callback:
+                            record {
+                              callback: StreamingCallback;
+                              token: StreamingCallbackToken;
+                            };};
+type StreamingCallbackToken = 
+ record {
+   content_encoding: text;
+   index: nat;
+   key: text;
+ };
+type StreamingCallbackResponse = 
+ record {
+   body: blob;
+   token: opt StreamingCallbackToken;
+ };
+type StreamingCallback = func (StreamingCallbackToken) ->
+                          (StreamingCallbackResponse) query;
 type Socials = 
  record {
    ceSo: opt CeSo;
@@ -64,6 +88,20 @@ type Result =
    err: Error;
    ok;
  };
+type Response = 
+ record {
+   body: blob;
+   headers: vec HeaderField;
+   status_code: nat16;
+   streaming_strategy: opt StreamingStrategy;
+ };
+type Request = 
+ record {
+   body: blob;
+   headers: vec HeaderField;
+   method: text;
+   url: text;
+ };
 type ProfileUpdate = 
  record {
    avatarRequest: AssetRequest;
@@ -75,6 +113,11 @@ type Profile =
    id: principal;
  };
 type InitOptions = record {admins: vec principal;};
+type HeaderField = 
+ record {
+   text;
+   text;
+ };
 type Error__1 = 
  variant {
    AlreadyExists;
@@ -152,4 +195,4 @@ type Asset =
    contentType: text;
    payload: vec blob;
  };
-service : (InitOptions) -> anon_class_23_1
+service : (InitOptions) -> anon_class_24_1

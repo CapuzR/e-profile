@@ -58,9 +58,22 @@ export type Error__1 = { 'Immutable' : null } |
   { 'InvalidRequest' : null } |
   { 'AuthorizedPrincipalLimitReached' : bigint } |
   { 'FailedToWrite' : string };
+export type HeaderField = [string, string];
 export interface InitOptions { 'admins' : Array<Principal> }
 export interface Profile { 'id' : Principal, 'bio' : Bio }
 export interface ProfileUpdate { 'bio' : Bio, 'avatarRequest' : AssetRequest }
+export interface Request {
+  'url' : string,
+  'method' : string,
+  'body' : Uint8Array | number[],
+  'headers' : Array<HeaderField>,
+}
+export interface Response {
+  'body' : Uint8Array | number[],
+  'headers' : Array<HeaderField>,
+  'streaming_strategy' : [] | [StreamingStrategy],
+  'status_code' : number,
+}
 export type Result = { 'ok' : null } |
   { 'err' : Error };
 export type Result_1 = { 'ok' : [[] | [Profile], [] | [Asset]] } |
@@ -74,6 +87,25 @@ export type Result_4 = { 'ok' : Array<Principal> } |
 export type Result_5 = { 'ok' : null } |
   { 'err' : Error__1 };
 export interface Socials { 'ceSo' : [] | [CeSo], 'deSo' : [] | [DeSo] }
+export type StreamingCallback = ActorMethod<
+  [StreamingCallbackToken],
+  StreamingCallbackResponse
+>;
+export interface StreamingCallbackResponse {
+  'token' : [] | [StreamingCallbackToken],
+  'body' : Uint8Array | number[],
+}
+export interface StreamingCallbackToken {
+  'key' : string,
+  'index' : bigint,
+  'content_encoding' : string,
+}
+export type StreamingStrategy = {
+    'Callback' : {
+      'token' : StreamingCallbackToken,
+      'callback' : StreamingCallback,
+    }
+  };
 export type TokenIdentifier = string;
 export type WriteAsset = {
     'Init' : { 'id' : string, 'size' : bigint, 'callback' : [] | [Callback] }
@@ -85,14 +117,23 @@ export type WriteAsset = {
       'callback' : [] | [Callback],
     }
   };
-export interface anon_class_23_1 {
+export interface anon_class_24_1 {
   'addNewAdmin' : ActorMethod<[Array<Principal>], Result_5>,
   'createProfile' : ActorMethod<[ProfileUpdate], Result>,
   'deleteProfile' : ActorMethod<[AssetRequest], Result>,
   'getAdmins' : ActorMethod<[], Result_4>,
   'getAllProfiles' : ActorMethod<[], Result_3>,
   'getDiscordHolders' : ActorMethod<[string], Result_2>,
+  'http_request' : ActorMethod<[Request], Response>,
+  'http_request_streaming_callback' : ActorMethod<
+    [StreamingCallbackToken],
+    StreamingCallbackResponse
+  >,
   'readProfile' : ActorMethod<[], Result_1>,
+  'staticStreamingCallback' : ActorMethod<
+    [StreamingCallbackToken],
+    StreamingCallbackResponse
+  >,
   'updateProfile' : ActorMethod<[ProfileUpdate], Result>,
 }
-export interface _SERVICE extends anon_class_23_1 {}
+export interface _SERVICE extends anon_class_24_1 {}

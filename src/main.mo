@@ -8,7 +8,6 @@ import Hash "mo:base/Hash";
 import Buffer "mo:base/Buffer";
 import Nat "mo:base/Nat";
 import Result "mo:base/Result";
-import Uploader "./uploader/main";
 import Static "./uploader/static";
 import Iter "mo:base/Iter";
 import Text "mo:base/Text";

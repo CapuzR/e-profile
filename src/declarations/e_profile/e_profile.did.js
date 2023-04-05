@@ -97,6 +97,39 @@ export const idlFactory = ({ IDL }) => {
     'ok' : IDL.Vec(IDL.Text),
     'err' : CommonError,
   });
+  const HeaderField = IDL.Tuple(IDL.Text, IDL.Text);
+  const Request = IDL.Record({
+    'url' : IDL.Text,
+    'method' : IDL.Text,
+    'body' : IDL.Vec(IDL.Nat8),
+    'headers' : IDL.Vec(HeaderField),
+  });
+  const StreamingCallbackToken = IDL.Record({
+    'key' : IDL.Text,
+    'index' : IDL.Nat,
+    'content_encoding' : IDL.Text,
+  });
+  const StreamingCallbackResponse = IDL.Record({
+    'token' : IDL.Opt(StreamingCallbackToken),
+    'body' : IDL.Vec(IDL.Nat8),
+  });
+  const StreamingCallback = IDL.Func(
+      [StreamingCallbackToken],
+      [StreamingCallbackResponse],
+      ['query'],
+    );
+  const StreamingStrategy = IDL.Variant({
+    'Callback' : IDL.Record({
+      'token' : StreamingCallbackToken,
+      'callback' : StreamingCallback,
+    }),
+  });
+  const Response = IDL.Record({
+    'body' : IDL.Vec(IDL.Nat8),
+    'headers' : IDL.Vec(HeaderField),
+    'streaming_strategy' : IDL.Opt(StreamingStrategy),
+    'status_code' : IDL.Nat16,
+  });
   const Asset = IDL.Record({
     'contentType' : IDL.Text,
     'payload' : IDL.Vec(IDL.Vec(IDL.Nat8)),
@@ -105,17 +138,28 @@ export const idlFactory = ({ IDL }) => {
     'ok' : IDL.Tuple(IDL.Opt(Profile), IDL.Opt(Asset)),
     'err' : Error,
   });
-  const anon_class_23_1 = IDL.Service({
+  const anon_class_24_1 = IDL.Service({
     'addNewAdmin' : IDL.Func([IDL.Vec(IDL.Principal)], [Result_5], []),
     'createProfile' : IDL.Func([ProfileUpdate], [Result], []),
     'deleteProfile' : IDL.Func([AssetRequest], [Result], []),
     'getAdmins' : IDL.Func([], [Result_4], []),
     'getAllProfiles' : IDL.Func([], [Result_3], []),
     'getDiscordHolders' : IDL.Func([IDL.Text], [Result_2], []),
+    'http_request' : IDL.Func([Request], [Response], ['query']),
+    'http_request_streaming_callback' : IDL.Func(
+        [StreamingCallbackToken],
+        [StreamingCallbackResponse],
+        ['query'],
+      ),
     'readProfile' : IDL.Func([], [Result_1], ['query']),
+    'staticStreamingCallback' : IDL.Func(
+        [StreamingCallbackToken],
+        [StreamingCallbackResponse],
+        ['query'],
+      ),
     'updateProfile' : IDL.Func([ProfileUpdate], [Result], []),
   });
-  return anon_class_23_1;
+  return anon_class_24_1;
 };
 export const init = ({ IDL }) => {
   const InitOptions = IDL.Record({ 'admins' : IDL.Vec(IDL.Principal) });
